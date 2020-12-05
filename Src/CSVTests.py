@@ -1,52 +1,19 @@
 import unittest
-from Calculator import Calculator
+from CsvReader import CsvReader, ClassFactory
+from pprint import pprint
 
 
 class MyTestCase(unittest.TestCase):
+
     def setUp(self) -> None:
-        self.calculator = Calculator()
+        self.csv_reader = CsvReader('employee_birthday.txt')
 
-    def test_instantiate_calculator(self):
-        self.assertIsInstance(self.calculator, Calculator)
-
-    def test_subtraction(self):
-        self.assertEqual(self.calculator.subtract(1, 1), 0)
-        self.assertEqual(self.calculator.result, 0)
-        fruits = ["apple", "banana", "cherry"]
-        for x in fruits:
-            print(x)
-
-    def test_addition(self):
-        self.assertEqual(self.calculator.add(1, 1), 2)
-        self.assertEqual(self.calculator.result, 2)
-        fruits = ["apple", "banana", "cherry"]
-        for x in fruits:
-            print(x)
-
-    def test_multiplication(self):
-        self.assertEqual(self.calculator.subtract(1, 1), 0)
-        self.assertEqual(self.calculator.result, 0)
-        fruits = ["apple", "banana", "cherry"]
-        for x in fruits:
-            print(x)
-
-    def test_division(self):
-        self.assertEqual(self.calculator.subtract(1, 1), 0)
-        self.assertEqual(self.calculator.result, 0)
-        fruits = ["apple", "banana", "cherry"]
-        for x in fruits:
-            print(x)
-
-    def test_square(self):
-        self.assertEqual(self.calculator.subtract(1, 1), 0)
-        self.assertEqual(self.calculator.result, 0)
-
-    def test_squareroot(self):
-        self.assertEqual(self.calculator.subtract(1, 1), 0)
-        self.assertEqual(self.calculator.result, 0)
-
-    def test_results_property(self):
-        self.assertEqual(self.calculator.result, 0)
+    def test_return_data_as_objects(self):
+        people = self.csv_reader.return_data_as_objects('person')
+        self.assertIsInstance(people, list)
+        test_class = ClassFactory('person', self.csv_reader.data[0])
+        for person in people:
+            self.assertEqual(person.__name__, test_class.__name__ )
 
 
 if __name__ == '__main__':
